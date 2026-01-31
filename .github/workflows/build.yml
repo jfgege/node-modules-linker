@@ -11,10 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile with MSVC
+      - name: Compile with MSVC (using cmd)
         run: |
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          cl /EHsc /std:c++17 /MT /D_UNICODE /DUNICODE NodeModulesLinker.cpp /link /subsystem:window shell32.lib shlwapi.lib
+          cl /EHsc /std:c++17 /MT /D_UNICODE /DUNICODE NodeModulesLinker.cpp /link /subsystem:windows shell32.lib shlwapi.lib
+        shell: cmd
 
       - name: Upload EXE
         uses: actions/upload-artifact@v4
