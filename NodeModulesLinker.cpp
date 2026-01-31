@@ -74,11 +74,14 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR, int nCmdShow) {
     wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     RegisterClassW(&wc);
 
+    // 使用明确的窗口样式，避免 ～ 运算符
+    DWORD windowStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_THICKFRAME;
+
     HWND hwnd = CreateWindowExW(
         0,
         CLASS_NAME,
         L"Node Modules 符号链接工具",
-        WS_OVERLAPPEDWINDOW & ～WS_MAXIMIZEBOX,  // ← 关键：半角 ～
+        windowStyle,
         CW_USEDEFAULT, CW_USEDEFAULT, 520, 420,
         NULL, NULL, hInstance, NULL
     );
