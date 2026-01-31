@@ -1,0 +1,23 @@
+name: Build NodeModulesLinker
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compile with MSVC
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          cl /EHsc /std:c++17 /MT /D_UNICODE /DUNICODE NodeModulesLinker.cpp /link /subsystem:window shell32.lib shlwapi.lib
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: NodeModulesLinker
+          path: NodeModulesLinker.exe
